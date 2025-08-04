@@ -83,7 +83,7 @@ public class BomProcessor(SolidEdgeFramework.Application application, Spinner sp
         {
             assemblyDocument = (SolidEdgeAssembly.AssemblyDocument)_application.Documents.Open(asmFile);
             var rootBomItem = CreateRootBomItem(assemblyDocument);
-            PopulateBom("", assemblyDocument, rootBomItem);
+            PopulateBom("", assemblyDocument, rootBomItem, 1);
             AddBomToTsv(tsvRows, rootBomItem, progressivo);
         }
         finally
@@ -98,7 +98,7 @@ public class BomProcessor(SolidEdgeFramework.Application application, Spinner sp
         if (assemblyDocument != null)
         {
             var rootBomItem = CreateRootBomItem(assemblyDocument);
-            PopulateBom("", assemblyDocument, rootBomItem);
+            PopulateBom("", assemblyDocument, rootBomItem, 1);
             AddBomToTsv(tsvRows, rootBomItem, progressivo);
         }
         else
@@ -125,12 +125,32 @@ public class BomProcessor(SolidEdgeFramework.Application application, Spinner sp
         }
     }
 
-    private static void PopulateBom(string levelString, SolidEdgeAssembly.AssemblyDocument assemblyDocument, BomItem parentBomItem)
+    private static void PopulateBom(string levelString, SolidEdgeAssembly.AssemblyDocument assemblyDocument, BomItem parentBomItem, int parentQuantity)
     {
-        int childIndex = 1;
-        var (OccurrenceCount, UniqueOccurrences) = CollectOccurrenceData(assemblyDocument);
+        var (occurrenceCount, uniqueOccurrences) = CollectOccurrenceData(assemblyDocument);
 
-        foreach (var kvp in UniqueOccurrences)
+        if (uniqueOccurrences.Count == 1)
+        {
+            var kvp = uniqueOccurrences.First();
+            var singleOccurrence = kvp.Value;
+            var lowerFileName = kvp.Key;
+
+            if (singleOccurrence.Subassembly)
+            {
+                int quantity = occurrenceCount[lowerFileName] * parentQuantity;
+                PopulateBom(levelString, (SolidEdgeAssembly.AssemblyDocument)singleOccurrence.OccurrenceDocument, parentBomItem, quantity);
+                return;
+            }
+            else
+            {
+                // If the single occurrence is a part, do not add it to the BOM.
+                // This ensures that assemblies with a single part are represented by a single line.
+                return;
+            }
+        }
+
+        int childIndex = 1;
+        foreach (var kvp in uniqueOccurrences)
         {
             var occurrence = kvp.Value;
             var lowerFileName = kvp.Key;
@@ -140,13 +160,13 @@ public class BomProcessor(SolidEdgeFramework.Application application, Spinner sp
             {
                 FileName = Path.GetFileNameWithoutExtension(occurrence.OccurrenceFileName),
                 LevelString = currentLevelString,
-                Quantity = OccurrenceCount[lowerFileName]
+                Quantity = occurrenceCount[lowerFileName] * parentQuantity
             };
             parentBomItem.Children.Add(bomItem);
 
             if (bomItem.IsSubassembly == true)
             {
-                PopulateBom(currentLevelString, (SolidEdgeAssembly.AssemblyDocument)occurrence.OccurrenceDocument, bomItem);
+                PopulateBom(currentLevelString, (SolidEdgeAssembly.AssemblyDocument)occurrence.OccurrenceDocument, bomItem, bomItem.Quantity ?? 1);
             }
             childIndex++;
         }
@@ -250,7 +270,7 @@ class Program
         {
             try
             {
-                asmFiles.AddRange(File.ReadAllLines(args[0]));
+                asmFiles.AddRange(File.ReadAllLines(args[0]).Select(line => line.Trim('"')));
             }
             catch (Exception ex)
             {
