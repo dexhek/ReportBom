@@ -137,7 +137,7 @@ public class BomProcessor(SolidEdgeFramework.Application application, Spinner sp
 
             if (singleOccurrence.Subassembly)
             {
-                int quantity = occurrenceCount[lowerFileName] * parentQuantity;
+                int quantity = occurrenceCount[lowerFileName];
                 PopulateBom(levelString, (SolidEdgeAssembly.AssemblyDocument)singleOccurrence.OccurrenceDocument, parentBomItem, quantity);
                 return;
             }
@@ -160,13 +160,13 @@ public class BomProcessor(SolidEdgeFramework.Application application, Spinner sp
             {
                 FileName = Path.GetFileNameWithoutExtension(occurrence.OccurrenceFileName),
                 LevelString = currentLevelString,
-                Quantity = occurrenceCount[lowerFileName] * parentQuantity
+                Quantity = occurrenceCount[lowerFileName]
             };
             parentBomItem.Children.Add(bomItem);
 
             if (bomItem.IsSubassembly == true)
             {
-                PopulateBom(currentLevelString, (SolidEdgeAssembly.AssemblyDocument)occurrence.OccurrenceDocument, bomItem, bomItem.Quantity ?? 1);
+                PopulateBom(currentLevelString, (SolidEdgeAssembly.AssemblyDocument)occurrence.OccurrenceDocument, bomItem, occurrenceCount[lowerFileName]);
             }
             childIndex++;
         }
