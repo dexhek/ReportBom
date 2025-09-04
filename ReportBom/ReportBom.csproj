@@ -8,7 +8,12 @@
     <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>2708109.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="2708109.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="SolidEdge.Community.Net9" Version="1.0.1" />
