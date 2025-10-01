@@ -134,16 +134,16 @@ public class BomProcessor(SolidEdgeFramework.Application application, Spinner sp
             var kvp = uniqueOccurrences.First();
             var singleOccurrence = kvp.Value;
             var lowerFileName = kvp.Key;
+            int quantity = occurrenceCount[lowerFileName];
 
-            if (singleOccurrence.Subassembly)
+            if (singleOccurrence.Subassembly && quantity == 1)
             {
-                int quantity = occurrenceCount[lowerFileName];
                 PopulateBom(levelString, (SolidEdgeAssembly.AssemblyDocument)singleOccurrence.OccurrenceDocument, parentBomItem, quantity);
                 return;
             }
-            else
+            else if (!singleOccurrence.Subassembly && quantity == 1)
             {
-                // If the single occurrence is a part, do not add it to the BOM.
+                // If the single occurrence is a part with quantity 1, do not add it to the BOM.
                 // This ensures that assemblies with a single part are represented by a single line.
                 return;
             }
