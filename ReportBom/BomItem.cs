@@ -1,8 +1,5 @@
 ﻿namespace ReportBom;
 
-/// <summary>
-/// Class to hold BOM data.
-/// </summary>
 public class BomItem
 {
     private List<BomItem> _children = [];
@@ -43,14 +40,10 @@ public class BomItem
 
         public bool? IsMissing { get; set; }
 
-        /// <summary>
         /// Returns all direct children.
-        /// </summary>
         public List<BomItem> Children { get => _children; set => _children = value; }
 
-        /// <summary>
         /// Returns all direct and descendant children.
-        /// </summary>
         public IEnumerable<BomItem> AllChildren
         {
             get
@@ -70,7 +63,6 @@ public class BomItem
             }
         }
 
-        // Demonstration of how to exclude empty collections during JSON.NET serialization.
         public bool ShouldSerializeChildren()
         {
             return Children.Count > 0;
