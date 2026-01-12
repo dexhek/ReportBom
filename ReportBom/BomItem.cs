@@ -6,12 +6,13 @@ public class BomItem
 
         public BomItem()
         {
+            // Parameterless constructor for serialization.
         }
 
-        public BomItem(SolidEdgeAssembly.Occurrence occurrence, int level)
+    public BomItem(SolidEdgeAssembly.Occurrence occurrence, int level)
         {
             Level = level;
-            FileName = System.IO.Path.GetFullPath(occurrence.OccurrenceFileName);
+            FileName = Path.GetFullPath(occurrence.OccurrenceFileName);
             IsMissing = occurrence.FileMissing();
             Quantity = 1;
             IsSubassembly = occurrence.Subassembly;
