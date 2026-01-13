@@ -8,11 +8,11 @@
     <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>2708109.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="2708109.ico" />
+    <Content Include="icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
