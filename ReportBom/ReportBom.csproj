@@ -16,7 +16,24 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="SolidEdge.Community.Net9" Version="1.0.1" />
+    <Reference Include="SolidEdge.Community">
+      <HintPath>lib\SolidEdge.Community.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdge">
+      <HintPath>lib\Interop.SolidEdge.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeConstants">
+      <HintPath>lib\Interop.SolidEdgeConstants.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeFramework">
+      <HintPath>lib\Interop.SolidEdgeFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeFrameworkSupport">
+      <HintPath>lib\Interop.SolidEdgeFrameworkSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeAssembly">
+      <HintPath>lib\Interop.SolidEdgeAssembly.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
