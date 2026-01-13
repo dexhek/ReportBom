@@ -34,6 +34,9 @@
     <Reference Include="Interop.SolidEdgeAssembly">
       <HintPath>lib\Interop.SolidEdgeAssembly.dll</HintPath>
     </Reference>
+    <Reference Include="Interop.SolidEdgePart">
+      <HintPath>lib\Interop.SolidEdgePart.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
