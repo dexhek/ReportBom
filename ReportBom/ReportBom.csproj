@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="SolidEdge.Community">
+      <HintPath>lib\SolidEdge.Community.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdge">
+      <HintPath>lib\Interop.SolidEdge.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeConstants">
+      <HintPath>lib\Interop.SolidEdgeConstants.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeFramework">
+      <HintPath>lib\Interop.SolidEdgeFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeFrameworkSupport">
+      <HintPath>lib\Interop.SolidEdgeFrameworkSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgeAssembly">
+      <HintPath>lib\Interop.SolidEdgeAssembly.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.SolidEdgePart">
+      <HintPath>lib\Interop.SolidEdgePart.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
