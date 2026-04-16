@@ -1,0 +1,48 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Library</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.SolidEdge">
+      <HintPath>lib\Interop.SolidEdge.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="SolidEdge.Community.AddIn">
+      <HintPath>lib\SolidEdge.Community.AddIn.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="lib\Interop.SolidEdge.dll" Link="Interop.SolidEdge.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="lib\ReportBomNativeResources.dll" Link="ReportBomNativeResources.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="lib\SolidEdge.Community.AddIn.dll" Link="SolidEdge.Community.AddIn.dll" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\Register-ReportBomAddIn.ps1" Link="Register-ReportBomAddIn.ps1" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\Unregister-ReportBomAddIn.ps1" Link="Unregister-ReportBomAddIn.ps1" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ReportBomAssemblyRibbon.xml" />
+  </ItemGroup>
+
+  <Target Name="CopyReportBomArtifacts" AfterTargets="Build">
+    <ItemGroup>
+      <ReportBomRuntimeFiles Include="..\ReportBom\bin\$(Configuration)\net8.0-windows\**\*.*" />
+    </ItemGroup>
+
+    <Copy
+      SourceFiles="@(ReportBomRuntimeFiles)"
+      DestinationFiles="@(ReportBomRuntimeFiles->'$(OutDir)ReportBom\%(RecursiveDir)%(Filename)%(Extension)')"
+      SkipUnchangedFiles="true"
+      Condition="'@(ReportBomRuntimeFiles)' != ''" />
+  </Target>
+
+</Project>
