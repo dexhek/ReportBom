@@ -6,8 +6,7 @@
 
     **ReportBom** is an open-source utility designed to automate the extraction, traversal, and generation of structured Bills of Materials (BOM) directly from Solid Edge.
 
-    By interfacing with CAD application programming interfaces, ReportBom recursively analyzes assembly structures, extracts component metadata, and outputs standardized, production-ready reports for
-  manufacturing, procurement, and enterprise lifecycle systems.
+    By interfacing with CAD application programming interfaces, ReportBom recursively analyzes assembly structures, extracts component metadata, and outputs standardized, production-ready reports for  manufacturing, procurement, and enterprise lifecycle systems.
 
     ---
 
